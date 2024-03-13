@@ -4,9 +4,9 @@
 package authentication
 
 import (
-	"go-client-library-passwordsafe/api/entities"
-	"go-client-library-passwordsafe/api/logging"
-	"go-client-library-passwordsafe/api/utils"
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/entities"
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/logging"
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/utils"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
