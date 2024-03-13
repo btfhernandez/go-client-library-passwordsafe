@@ -6,14 +6,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"go-client-library-passwordsafe/api/authentication"
-	"go-client-library-passwordsafe/api/entities"
-	"go-client-library-passwordsafe/api/logging"
-	"go-client-library-passwordsafe/api/utils"
 	"io"
 	"net/url"
 	"strconv"
 	"strings"
+
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/authentication"
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/entities"
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/logging"
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/utils"
 
 	backoff "github.com/cenkalti/backoff/v4"
 )

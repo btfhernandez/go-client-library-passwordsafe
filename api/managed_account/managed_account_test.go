@@ -4,10 +4,10 @@
 package managed_accounts
 
 import (
-	"go-client-library-passwordsafe/api/authentication"
-	"go-client-library-passwordsafe/api/entities"
-	"go-client-library-passwordsafe/api/logging"
-	"go-client-library-passwordsafe/api/utils"
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/authentication"
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/entities"
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/logging"
+	"github.com/btfhernandez/go-client-library-passwordsafe/api/utils"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
