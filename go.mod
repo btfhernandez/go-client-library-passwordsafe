@@ -1,4 +1,4 @@
-module github.com/BeyondTrust/go-client-library-passwordsafe
+module github.com/btfhernandez/go-client-library-passwordsafe
 
 go 1.21
 
