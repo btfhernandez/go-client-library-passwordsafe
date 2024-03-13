@@ -50,6 +50,8 @@ func (managedAccounObj *ManagedAccountstObj) GetSecret(secretPath string, separa
 // ManageAccountFlow is responsible for creating a dictionary of managed account system/name and secret key-value pairs.
 func (managedAccounObj *ManagedAccountstObj) ManageAccountFlow(secretsToRetrieve []string, separator string) (map[string]string, error) {
 
+	managedAccounObj.log.Info("FROM LIBRARY....")
+
 	secretsToRetrieve = utils.ValidatePaths(secretsToRetrieve, true, separator, managedAccounObj.log)
 	managedAccounObj.log.Info(fmt.Sprintf("Retrieving %v Secrets", len(secretsToRetrieve)))
 	secretDictionary := make(map[string]string)
