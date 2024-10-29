@@ -31,3 +31,14 @@ type GetTokenResponse struct {
 	TokenType   string `json:"token_type"`
 	Scope       string `json:"scope"`
 }
+
+type ManagedSystemResponse struct {
+	ManagedSystemID int
+	SystemName      string
+}
+
+type CreateManagedAccountsResponse struct {
+	ManagedAccountID int
+	ManagedSystemID  int
+	AccountName      string
+}

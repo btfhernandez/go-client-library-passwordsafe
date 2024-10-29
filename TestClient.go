@@ -112,6 +112,16 @@ func main() {
 	// WARNING: Do not log secrets in production code, the following log statement logs test secrets for testing purposes:
 	zapLogger.Warn(fmt.Sprintf("%v", gotManagedAccount))
 
+	// creating a managed account in system_integration_test managed system.
+	createResponse, err := manageAccountObj.ManageAccountCreateFlow("system_integration_test", "managed_account_2017", "Password", "Description")
+
+	if err != nil {
+		zapLogger.Error(fmt.Sprintf("%v", err))
+		return
+	}
+
+	zapLogger.Warn(fmt.Sprintf("Created Managed Account: %v", createResponse.AccountName))
+
 	// signing out
 	_ = authenticate.SignOut()
 
