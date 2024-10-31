@@ -12,10 +12,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/BeyondTrust/go-client-library-passwordsafe/api/authentication"
-	"github.com/BeyondTrust/go-client-library-passwordsafe/api/entities"
-	"github.com/BeyondTrust/go-client-library-passwordsafe/api/logging"
-	"github.com/BeyondTrust/go-client-library-passwordsafe/api/utils"
+	"github.com/bthernandez/go-client-library-passwordsafe/api/authentication"
+	"github.com/bthernandez/go-client-library-passwordsafe/api/entities"
+	"github.com/bthernandez/go-client-library-passwordsafe/api/logging"
+	"github.com/bthernandez/go-client-library-passwordsafe/api/utils"
 
 	backoff "github.com/cenkalti/backoff/v4"
 	"go.uber.org/zap"

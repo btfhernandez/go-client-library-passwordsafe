@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/BeyondTrust/go-client-library-passwordsafe/api/authentication"
-	"github.com/BeyondTrust/go-client-library-passwordsafe/api/entities"
-	logging "github.com/BeyondTrust/go-client-library-passwordsafe/api/logging"
-	managed_accounts "github.com/BeyondTrust/go-client-library-passwordsafe/api/managed_account"
-	"github.com/BeyondTrust/go-client-library-passwordsafe/api/utils"
+	"github.com/bthernandez/go-client-library-passwordsafe/api/authentication"
+	"github.com/bthernandez/go-client-library-passwordsafe/api/entities"
+	logging "github.com/bthernandez/go-client-library-passwordsafe/api/logging"
+	managed_accounts "github.com/bthernandez/go-client-library-passwordsafe/api/managed_account"
+	"github.com/bthernandez/go-client-library-passwordsafe/api/utils"
 
 	//"os"
 

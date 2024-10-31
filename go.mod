@@ -1,6 +1,6 @@
-module github.com/BeyondTrust/go-client-library-passwordsafe
+module github.com/bthernandez/go-client-library-passwordsafe
 
-go 1.21.9
+go 1.23
 
 require (
 	github.com/cenkalti/backoff/v4 v4.3.0

@@ -9,7 +9,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	logging "github.com/BeyondTrust/go-client-library-passwordsafe/api/logging"
+	logging "github.com/bthernandez/go-client-library-passwordsafe/api/logging"
 
 	validator "github.com/go-playground/validator/v10"
 )

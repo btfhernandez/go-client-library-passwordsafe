@@ -15,7 +15,7 @@ import (
 	"path/filepath"
 	"time"
 
-	logging "github.com/BeyondTrust/go-client-library-passwordsafe/api/logging"
+	logging "github.com/bthernandez/go-client-library-passwordsafe/api/logging"
 	"golang.org/x/crypto/pkcs12"
 )
 
