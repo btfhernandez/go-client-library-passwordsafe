@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/BeyondTrust/go-client-library-passwordsafe/api/authentication"
+	"github.com/BeyondTrust/go-client-library-passwordsafe/api/entities"
 	logging "github.com/BeyondTrust/go-client-library-passwordsafe/api/logging"
 	managed_accounts "github.com/BeyondTrust/go-client-library-passwordsafe/api/managed_account"
-	"github.com/BeyondTrust/go-client-library-passwordsafe/api/secrets"
 	"github.com/BeyondTrust/go-client-library-passwordsafe/api/utils"
 
 	//"os"
@@ -26,9 +26,9 @@ func main() {
 	// create a zap logger wrapper
 	zapLogger := logging.NewZapLogger(logger)
 
-	apiUrl := "https://example.com:443/BeyondTrust/api/public/v3/"
-	clientId := ""
-	clientSecret := ""
+	apiUrl := "https://jury2310.ps-dev.beyondtrustcloud.com:443/BeyondTrust/api/public/v3"
+	clientId := "6138d050-e266-4b05-9ced-35e7dd5093ae"
+	clientSecret := "71svdPLh2AR97sPs5gfPjGjpqSUxZTKSPmEvvbMx89o="
 	separator := "/"
 	certificate := ""
 	certificateKey := ""
@@ -79,48 +79,54 @@ func main() {
 		return
 	}
 
-	// instantiating secret obj
-	secretObj, _ := secrets.NewSecretObj(*authenticate, zapLogger, maxFileSecretSizeBytes)
-
-	secretPaths := []string{"fake/Client", "fake/test_file_1"}
-
-	gotSecrets, _ := secretObj.GetSecrets(secretPaths, separator)
-
-	// WARNING: Do not log secrets in production code, the following log statement logs test secrets for testing purposes:
-	zapLogger.Warn(fmt.Sprintf("%v", gotSecrets))
-
-	// getting single secret
-	gotSecret, _ := secretObj.GetSecret("fake/Test1", separator)
-
-	// WARNING: Do not log secrets in production code, the following log statement logs test secrets for testing purposes:
-	zapLogger.Warn(fmt.Sprintf("Secret Test: %v", gotSecret))
-
 	// instantiating managed account obj
 	manageAccountObj, _ := managed_accounts.NewManagedAccountObj(*authenticate, zapLogger)
 
-	newSecretPaths := []string{"fake/account01", "fake/account01"}
-
-	//managedAccountList := strings.Split(paths, ",")
-	gotManagedAccounts, _ := manageAccountObj.GetSecrets(newSecretPaths, separator)
-
-	// WARNING: Do not log secrets in production code, the following log statement logs test secrets for testing purposes:
-	zapLogger.Warn(fmt.Sprintf("%v", gotManagedAccounts))
-
-	// getting single managed account
-	gotManagedAccount, _ := manageAccountObj.GetSecret("fake/account04", separator)
-
-	// WARNING: Do not log secrets in production code, the following log statement logs test secrets for testing purposes:
-	zapLogger.Warn(fmt.Sprintf("%v", gotManagedAccount))
+	account := entities.AccountDetails{
+		AccountName:                       "Test2014R",
+		Password:                          "Hol",
+		DomainName:                        "exampleDomain",
+		UserPrincipalName:                 "user@example.com",
+		SAMAccountName:                    "samAccount",
+		DistinguishedName:                 "CN=example,CN=Users,DC=domain,DC=com",
+		PrivateKey:                        "privateKey",
+		Passphrase:                        "passphrase",
+		PasswordFallbackFlag:              true,
+		LoginAccountFlag:                  false,
+		Description:                       "Sample account for testing",
+		ApiEnabled:                        true,
+		ReleaseNotificationEmail:          "notify@example.com",
+		ChangeServicesFlag:                false,
+		RestartServicesFlag:               false,
+		ChangeTasksFlag:                   true,
+		ReleaseDuration:                   300000,
+		MaxReleaseDuration:                300000,
+		ISAReleaseDuration:                180,
+		MaxConcurrentRequests:             5,
+		AutoManagementFlag:                false,
+		DSSAutoManagementFlag:             false,
+		CheckPasswordFlag:                 true,
+		ResetPasswordOnMismatchFlag:       false,
+		ChangePasswordAfterAnyReleaseFlag: true,
+		ChangeFrequencyType:               "first",
+		ChangeFrequencyDays:               1,
+		ChangeTime:                        "14:00",
+		NextChangeDate:                    "2023-12-01", // Cambiar a `time.Time` si es necesario
+		UseOwnCredentials:                 true,
+		ChangeWindowsAutoLogonFlag:        true,
+		ChangeComPlusFlag:                 false,
+		ObjectID:                          "uniqueObjectID",
+	}
 
 	// creating a managed account in system_integration_test managed system.
-	createResponse, err := manageAccountObj.ManageAccountCreateFlow("system_integration_test", "managed_account_2017", "Password", "Description")
+	createResponse, err := manageAccountObj.ManageAccountCreateFlow("system_integration_test", account)
 
 	if err != nil {
-		zapLogger.Error(fmt.Sprintf("%v", err))
+		zapLogger.Debug(fmt.Sprintf(" %v", err))
 		return
 	}
 
-	zapLogger.Warn(fmt.Sprintf("Created Managed Account: %v", createResponse.AccountName))
+	zapLogger.Debug(fmt.Sprintf("Created Managed Account: %v", createResponse.AccountName))
 
 	// signing out
 	_ = authenticate.SignOut()

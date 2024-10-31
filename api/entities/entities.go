@@ -42,3 +42,43 @@ type CreateManagedAccountsResponse struct {
 	ManagedSystemID  int
 	AccountName      string
 }
+
+type AccountDetails struct {
+	AccountName                       string `validate:"required,max=245"`
+	Password                          string `validate:"required_if=AutoManagementFlag false"`
+	DomainName                        string `validate:"max=50"`
+	UserPrincipalName                 string `validate:"omitempty,max=500"`
+	SAMAccountName                    string `validate:"omitempty,max=20"`
+	DistinguishedName                 string `validate:"omitempty,max=1000"`
+	PrivateKey                        string `validate:"omitempty"`
+	Passphrase                        string `validate:"required_if=PrivateKey Encrypted"`
+	PasswordFallbackFlag              bool   `validate:"omitempty"`
+	LoginAccountFlag                  bool   `validate:"omitempty"`
+	Description                       string `validate:"max=1024"`
+	PasswordRuleID                    int    `validate:"gte=0"`
+	ApiEnabled                        bool   `validate:"omitempty"`
+	ReleaseNotificationEmail          string `validate:"omitempty,email,max=255"`
+	ChangeServicesFlag                bool   `validate:"omitempty"`
+	RestartServicesFlag               bool   `validate:"omitempty"`
+	ChangeTasksFlag                   bool   `validate:"omitempty"`
+	ReleaseDuration                   int    `validate:"min=1,max=525600,ltefield=MaxReleaseDuration"`
+	MaxReleaseDuration                int    `validate:"min=1,max=525600"`
+	ISAReleaseDuration                int    `validate:"min=1,max=525600"`
+	MaxConcurrentRequests             int    `validate:"min=0,max=999"`
+	AutoManagementFlag                bool   `validate:"omitempty"`
+	DSSAutoManagementFlag             bool   `validate:"omitempty"`
+	CheckPasswordFlag                 bool   `validate:"omitempty"`
+	ChangePasswordAfterAnyReleaseFlag bool   `validate:"omitempty"`
+	ResetPasswordOnMismatchFlag       bool   `validate:"omitempty"`
+	ChangeFrequencyType               string `validate:"omitempty,oneof=first last xdays"`
+	ChangeFrequencyDays               int    `validate:"min=1,max=999"`
+	ChangeTime                        string `validate:"omitempty,datetime=15:04"`
+	NextChangeDate                    string `validate:"omitempty,datetime=2006-01-02"`
+	UseOwnCredentials                 bool   `validate:"omitempty"`
+	WorkgroupID                       *int   `validate:"omitempty"`
+	ChangeWindowsAutoLogonFlag        bool   `validate:"omitempty"`
+	ChangeComPlusFlag                 bool   `validate:"omitempty"`
+	ChangeDComFlag                    bool   `validate:"omitempty"`
+	ChangeSComFlag                    bool   `validate:"omitempty"`
+	ObjectID                          string `validate:"max=36"`
+}

@@ -15,8 +15,8 @@ import (
 	"github.com/BeyondTrust/go-client-library-passwordsafe/api/entities"
 	"github.com/BeyondTrust/go-client-library-passwordsafe/api/logging"
 	"github.com/BeyondTrust/go-client-library-passwordsafe/api/utils"
-
 	backoff "github.com/cenkalti/backoff/v4"
+	"github.com/go-playground/validator/v10"
 )
 
 // ManagedAccountstObj responsible for session requests.
@@ -252,13 +252,20 @@ func (managedAccounObj *ManagedAccountstObj) ManagedAccountRequestCheckIn(reques
 }
 
 // ManageAccountCreateFlow is responsible for creating a managed accounts in Password Safe.
-func (managedAccounObj *ManagedAccountstObj) ManageAccountCreateFlow(systemNameTarget string, managedAccountName, password string, description string) (entities.CreateManagedAccountsResponse, error) {
+func (managedAccounObj *ManagedAccountstObj) ManageAccountCreateFlow(systemNameTarget string, accountDetails entities.AccountDetails) (entities.CreateManagedAccountsResponse, error) {
 
 	var managedSystem *entities.ManagedSystemResponse
 	var createResponse entities.CreateManagedAccountsResponse
 
-	ManagedAccountCreatUrl := managedAccounObj.authenticationObj.ApiUrl.JoinPath("ManagedSystems").String()
+	validate := validator.New()
+	err := validate.Struct(accountDetails)
 
+	if err != nil {
+		managedAccounObj.log.Error(fmt.Sprintf(" %v", err))
+		return createResponse, err
+	}
+
+	ManagedAccountCreatUrl := managedAccounObj.authenticationObj.ApiUrl.JoinPath("ManagedSystems").String()
 	managedSystemGetSystemsResponse, err := managedAccounObj.ManagedSystemGetSystems(ManagedAccountCreatUrl)
 
 	if err != nil {
@@ -278,7 +285,7 @@ func (managedAccounObj *ManagedAccountstObj) ManageAccountCreateFlow(systemNameT
 
 	ManagedAccountCreateManagedAccountUrl := managedAccounObj.authenticationObj.ApiUrl.JoinPath("ManagedSystems", fmt.Sprintf("%d", managedSystem.ManagedSystemID), "ManagedAccounts").String()
 
-	createResponse, err = managedAccounObj.ManagedAccountCreateManagedAccount(managedAccountName, password, description, ManagedAccountCreateManagedAccountUrl)
+	createResponse, err = managedAccounObj.ManagedAccountCreateManagedAccount(accountDetails, ManagedAccountCreateManagedAccountUrl)
 
 	if err != nil {
 		return createResponse, err
@@ -289,13 +296,18 @@ func (managedAccounObj *ManagedAccountstObj) ManageAccountCreateFlow(systemNameT
 }
 
 // ManagedAccountCreateManagedAccount calls Secret Safe API Requests enpoint to create managed accounts.
-func (managedAccounObj *ManagedAccountstObj) ManagedAccountCreateManagedAccount(managedAccountName string, password string, description string, url string) (entities.CreateManagedAccountsResponse, error) {
+func (managedAccounObj *ManagedAccountstObj) ManagedAccountCreateManagedAccount(accountDetails entities.AccountDetails, url string) (entities.CreateManagedAccountsResponse, error) {
 	messageLog := fmt.Sprintf("%v %v", "POST", url)
 	managedAccounObj.log.Debug(messageLog)
 
-	data := fmt.Sprintf(`{"AccountName":"%v", "Password":"%v", "Description":"%v", "ApiEnabled":true}`, managedAccountName, password, description)
+	accountDetailsJson, err := json.Marshal(accountDetails)
+	if err != nil {
+		return entities.CreateManagedAccountsResponse{}, err
+	}
 
-	b := bytes.NewBufferString(data)
+	accountDetailsJsonString := string(accountDetailsJson)
+
+	b := bytes.NewBufferString(accountDetailsJsonString)
 
 	var body io.ReadCloser
 	var technicalError error
@@ -375,7 +387,7 @@ func (managedAccounObj *ManagedAccountstObj) ManagedSystemGetSystems(url string)
 	}
 
 	if len(managedSystemObject) == 0 {
-		return managedSystemObject, fmt.Errorf("empty Mangend Account List")
+		return managedSystemObject, fmt.Errorf("empty System Account List")
 	}
 
 	return managedSystemObject, nil

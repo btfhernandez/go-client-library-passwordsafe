@@ -1290,7 +1290,7 @@ func TestManagedAccountCreateManagedAccountFlowEmptySystemList(t *testing.T) {
 				http.NotFound(w, r)
 			}
 		})),
-		response: "empty Mangend Account List",
+		response: "empty System Account List",
 	}
 
 	apiUrl, _ := url.Parse(testConfig.server.URL + "/")
